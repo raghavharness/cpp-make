@@ -36,6 +36,9 @@ $(BUILDDIR)/%.o: $(TESTDIR)/%.$(SRCEXT)
 	@mkdir -p $(BUILDDIR)
 	@$(CXX) $(CXXFLAGS) $(TESTFLAGS) -c -o $@ $<
 
+lint:
+	cppcheck --enable=all --inconclusive --std=c++11 --language=c++ --suppress=missingIncludeSystem -I include/ src/
+
 clean:
 	@rm -rf $(BUILDDIR) $(TARGET) $(TESTTARGET)
 
