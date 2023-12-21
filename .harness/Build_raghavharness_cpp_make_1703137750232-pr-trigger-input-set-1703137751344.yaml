@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_raghavharness_cpp_make_1703137750232-pr-trigger-input-set
+  identifier: Build_raghavharness_cpp_make_1703137750232prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: autogen
+  pipeline:
+    identifier: Build_raghavharness_cpp_make_1703137750232
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
