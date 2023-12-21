@@ -1,0 +1,63 @@
+pipeline:
+  identifier: Build_raghavharness_cpp_make_1703137750232
+  name: Build cpp-make
+  orgIdentifier: default
+  projectIdentifier: autogen
+  properties:
+    ci:
+      codebase:
+        build: <+input>
+        connectorRef: account.Github
+        repoName: raghavharness/cpp-make
+  stages:
+    - stage:
+        identifier: build
+        name: build
+        spec:
+          cloneCodebase: true
+          execution:
+            steps:
+              - step:
+                  identifier: buildmake
+                  name: build make
+                  spec:
+                    command: make
+                  timeout: ""
+                  type: Run
+              - step:
+                  identifier: makelint
+                  name: make lint
+                  spec:
+                    command: make lint
+                  timeout: ""
+                  type: Run
+              - step:
+                  identifier: runtests
+                  name: run tests
+                  spec:
+                    command: |-
+                      TEST_NODE_INDEX=<+strategy.iteration>
+                      TEST_NODE_TOTAL=<+strategy.iterations>
+                      export TEST_FILES=`split_tests  --glob 'test/**/*.cpp' --split-by file_timing --verbose --split-index '${TEST_NODE_INDEX}' --split-total '${TEST_NODE_TOTAL}'`
+                  timeout: ""
+                  type: Run
+              - step:
+                  identifier: dockerbuild
+                  name: docker_build
+                  spec:
+                    image: plugins/docker
+                    settings:
+                      dry_run: "true"
+                      password: <+input>
+                      repo: hello/world
+                      tags: latest
+                      username: <+input>
+                  timeout: ""
+                  type: Plugin
+          platform:
+            arch: Amd64
+            os: Linux
+          runtime:
+            spec: {}
+            type: Cloud
+        type: CI
