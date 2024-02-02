@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_cpp_make_1706857051372-pr-trigger-input-set
+  identifier: Build_cpp_make_1706857051372prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: RaghavTest
+  pipeline:
+    identifier: Build_cpp_make_1706857051372
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
